@@ -1,0 +1,66 @@
+[
+  {
+    "id": "PR-2024-001",
+    "date": "2024-11-12",
+    "title": "Acme Realty Corp Acquires 5-Property Industrial Portfolio in Chicago",
+    "category": "Acquisition",
+    "summary": "Acme Realty Corp announced today the acquisition of a 5-property industrial portfolio in the Chicago metropolitan area for approximately $320 million. The properties total 380,000 sq ft and are currently 94% leased.",
+    "keywords": ["acquisition", "industrial", "Chicago", "portfolio"]
+  },
+  {
+    "id": "PR-2024-002",
+    "date": "2024-10-22",
+    "title": "Q3 2024 Financial Results: Revenue Up 6.5% Year-over-Year",
+    "category": "Earnings",
+    "summary": "Acme Realty Corp reported Q3 2024 revenue of $148.2 million, a 6.5% increase compared to Q3 2023. Net income reached $56.3 million. Operating expenses were controlled at $91.9 million.",
+    "keywords": ["Q3", "earnings", "revenue", "net income"]
+  },
+  {
+    "id": "PR-2024-003",
+    "date": "2024-09-05",
+    "title": "Acme Realty Expands Austin Office Campus with New 67,000 Sq Ft Build-to-Suit",
+    "category": "Expansion",
+    "summary": "Acme Realty Corp broke ground on a 67,000 sq ft build-to-suit office facility in Austin, Texas. The project is pre-leased to a Fortune 500 technology tenant and is expected to deliver in Q2 2025.",
+    "keywords": ["expansion", "Austin", "office", "build-to-suit", "construction"]
+  },
+  {
+    "id": "PR-2024-004",
+    "date": "2024-08-14",
+    "title": "Acme Realty Signs 10-Year Lease Renewal at 1 World Trade Center, New York",
+    "category": "Leasing",
+    "summary": "Acme Realty Corp announced a 10-year lease renewal with a major financial services firm at 1 World Trade Center, New York, covering 95,000 sq ft. The renewal secures approximately $47.5 million in future contracted revenue.",
+    "keywords": ["lease", "renewal", "New York", "office", "World Trade Center"]
+  },
+  {
+    "id": "PR-2024-005",
+    "date": "2024-07-01",
+    "title": "Acme Realty Divests Three Non-Core Retail Assets in Los Angeles",
+    "category": "Disposition",
+    "summary": "Acme Realty Corp completed the sale of three retail properties in the Los Angeles market for a combined $89 million, realizing a gain on sale of approximately $18 million. Proceeds will be redeployed into industrial and office assets.",
+    "keywords": ["disposition", "sale", "Los Angeles", "retail", "non-core"]
+  },
+  {
+    "id": "PR-2024-006",
+    "date": "2024-05-20",
+    "title": "Acme Realty Partners with GreenBuild Initiative for Portfolio Sustainability Upgrades",
+    "category": "ESG",
+    "summary": "Acme Realty Corp entered a strategic partnership with the GreenBuild Initiative to upgrade 12 properties across its portfolio to LEED Gold certification. The initiative targets a 30% reduction in energy consumption by 2026.",
+    "keywords": ["ESG", "sustainability", "LEED", "green", "energy"]
+  },
+  {
+    "id": "PR-2023-001",
+    "date": "2023-11-08",
+    "title": "Q3 2023 Financial Results: Steady Growth Across Office and Industrial Segments",
+    "category": "Earnings",
+    "summary": "Acme Realty Corp reported Q3 2023 revenue of $139.1 million with net income of $52.9 million. The industrial segment outperformed expectations with 8.2% revenue growth.",
+    "keywords": ["Q3", "2023", "earnings", "industrial", "office"]
+  },
+  {
+    "id": "PR-2023-002",
+    "date": "2023-06-15",
+    "title": "Acme Realty Acquires San Francisco Class-A Office Tower for $415 Million",
+    "category": "Acquisition",
+    "summary": "Acme Realty Corp completed the acquisition of a Class-A office tower at 555 Market Street, San Francisco for $415 million. The 52,000 sq ft property is 98% leased with a weighted average lease term of 7.3 years.",
+    "keywords": ["acquisition", "San Francisco", "office", "Class-A"]
+  }
+]

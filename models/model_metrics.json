@@ -1,0 +1,27 @@
+{
+  "random_forest_regressor": {
+    "rmse": 0.5055394416102246,
+    "mae": 0.3275553144622095,
+    "r2": 0.8049691880418459,
+    "dataset": "California Housing",
+    "model": "RandomForestRegressor"
+  },
+  "logistic_regression_classifier": {
+    "accuracy": 0.8175384275129934,
+    "precision": 0.37670930745478604,
+    "recall": 0.7827681026581118,
+    "f1": 0.5086360929124479,
+    "confusion_matrix": [
+      [
+        6539,
+        1413
+      ],
+      [
+        237,
+        854
+      ]
+    ],
+    "dataset": "Bank Marketing (UCI)",
+    "model": "LogisticRegression"
+  }
+}

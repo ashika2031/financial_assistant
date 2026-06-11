@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prologis AI — Financial Intelligence Platform</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0f172a;
+      --bg2:      #1e293b;
+      --bg3:      #162032;
+      --border:   #2d3f55;
+      --accent:   #38bdf8;
+      --accent2:  #0ea5e9;
+      --text:     #e2e8f0;
+      --muted:    #94a3b8;
+      --dim:      #64748b;
+      --green:    #4ade80;
+      --amber:    #f59e0b;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: #0b1120;
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.6rem; }
+    .nav-brand-icon { font-size: 1.3rem; }
+    .nav-brand-title { font-size: 1rem; font-weight: 800; color: var(--accent); letter-spacing: -0.01em; }
+    .nav-brand-sub { font-size: 0.65rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.07em; }
+    .nav-links { display: flex; gap: 1.2rem; align-items: center; }
+    .nav-links a {
+      color: var(--muted); font-size: 0.82rem; font-weight: 500; text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-badge {
+      background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.3);
+      color: var(--accent); border-radius: 99px; padding: 3px 10px;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em;
+    }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 5rem 2rem 3.5rem;
+      text-align: center;
+      background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(56,189,248,0.08) 0%, transparent 70%);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.25);
+      border-radius: 99px; padding: 4px 14px;
+      font-size: 0.72rem; font-weight: 700; color: var(--accent);
+      letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800; color: #f1f5f9;
+      letter-spacing: -0.03em; line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: var(--muted); max-width: 620px; margin: 0 auto 2rem;
+    }
+    .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.65rem 1.4rem; border-radius: 8px;
+      font-size: 0.88rem; font-weight: 600; text-decoration: none;
+      transition: all 0.18s; cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0369a1, #0284c7);
+      color: #f0f9ff; border: 1px solid var(--accent);
+      box-shadow: 0 4px 18px rgba(56,189,248,0.22);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0284c7, #0ea5e9);
+      box-shadow: 0 6px 24px rgba(56,189,248,0.35);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: var(--bg2); color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent); color: var(--accent);
+      background: rgba(56,189,248,0.07);
+      transform: translateY(-2px);
+    }
+
+    /* ── STATS ROW ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem; padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin: 0 auto; max-width: 1080px;
+    }
+    .stat { text-align: center; padding: 0.5rem; }
+    .stat-value { font-size: 1.7rem; font-weight: 800; color: var(--accent); }
+    .stat-label { font-size: 0.72rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 3px; }
+
+    /* ── SECTION ── */
+    section { padding: 3.5rem 0; }
+    .section-label {
+      font-size: 0.65rem; font-weight: 700; color: var(--dim);
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-size: clamp(1.3rem, 3vw, 1.9rem);
+      font-weight: 700; color: #f1f5f9; letter-spacing: -0.02em; margin-bottom: 0.6rem;
+    }
+    .section-sub { font-size: 0.9rem; color: var(--muted); margin-bottom: 2.2rem; max-width: 540px; }
+
+    /* ── FEATURE GRID ── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.1rem;
+    }
+    .feature-card {
+      background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+      border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.3rem 1.4rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    }
+    .feature-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(56,189,248,0.12);
+    }
+    .feature-icon { font-size: 1.6rem; margin-bottom: 0.65rem; }
+    .feature-title { font-size: 1rem; font-weight: 700; color: #e2e8f0; margin-bottom: 0.4rem; }
+    .feature-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+    .feature-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 0.75rem; }
+    .tag {
+      background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.2);
+      color: #7dd3fc; border-radius: 4px; padding: 2px 8px;
+      font-size: 0.67rem; font-weight: 600;
+    }
+
+    /* ── TECH STACK ── */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.9rem;
+    }
+    .tech-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1rem 1.1rem;
+      display: flex; align-items: flex-start; gap: 0.75rem;
+    }
+    .tech-dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 4px;
+    }
+    .tech-name { font-size: 0.87rem; font-weight: 700; color: #e2e8f0; }
+    .tech-desc { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+    /* ── SETUP STEPS ── */
+    .setup-card {
+      background: linear-gradient(135deg, #0c2340, var(--bg2));
+      border: 1px solid var(--border); border-left: 4px solid var(--accent);
+      border-radius: 14px; padding: 1.5rem 1.75rem;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.28);
+    }
+    .step { display: flex; gap: 1rem; margin-bottom: 1.2rem; align-items: flex-start; }
+    .step:last-child { margin-bottom: 0; }
+    .step-num {
+      background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.3);
+      color: var(--accent); border-radius: 50%; width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 800; flex-shrink: 0;
+    }
+    .step-title { font-size: 0.9rem; font-weight: 700; color: #e2e8f0; margin-bottom: 3px; }
+    .step-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+    pre.code-block {
+      background: #0d1829; border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.75rem 1rem;
+      font-size: 0.78rem; color: #7dd3fc;
+      overflow-x: auto; margin-top: 6px;
+      white-space: pre-wrap; word-break: break-all;
+    }
+
+    /* ── CLOUD STATUS STRIP ── */
+    .cloud-strip {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.25rem 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.8rem;
+    }
+    .cloud-item { display: flex; align-items: center; gap: 0.6rem; }
+    .cloud-dot { font-size: 0.75rem; }
+    .cloud-name { font-size: 0.82rem; font-weight: 600; color: #e2e8f0; }
+    .cloud-status { font-size: 0.7rem; color: var(--dim); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0b1120; border-top: 1px solid var(--border);
+      padding: 2rem; text-align: center;
+    }
+    footer p { font-size: 0.78rem; color: var(--dim); line-height: 1.8; }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 640px) {
+      .hero { padding: 3rem 1.25rem 2.5rem; }
+      .container { padding: 0 1.25rem; }
+      nav { padding: 0 1.25rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-brand">
+    <span class="nav-brand-icon">🏦</span>
+    <div>
+      <div class="nav-brand-title">Prologis AI</div>
+      <div class="nav-brand-sub">Financial Intelligence Platform</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#stack">Tech Stack</a>
+    <a href="#setup">Setup</a>
+    <a href="https://github.com/ashika2031/financial_assistant" target="_blank">GitHub</a>
+    <span class="nav-badge">v1.0 · Local Mode</span>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-badge">Real Estate · Financial Intelligence · ML</div>
+  <h1>Prologis AI<br><span>Financial Intelligence Platform</span></h1>
+  <p>
+    A full-stack financial assistant for Acme Realty Corp — powered by PostgreSQL,
+    scikit-learn ML models, SEC EDGAR filings, press releases, and a rule-based
+    chatbot with multi-cloud stubs for Vertex AI, SageMaker, and Bedrock.
+  </p>
+  <div class="hero-cta">
+    <a href="https://github.com/ashika2031/financial_assistant" target="_blank" class="btn btn-primary">
+      ⭐ View on GitHub
+    </a>
+    <a href="#setup" class="btn btn-secondary">
+      🚀 Run Locally
+    </a>
+  </div>
+</div>
+
+<!-- ── STATS ── -->
+<div class="container">
+  <div class="stats">
+    <div class="stat"><div class="stat-value">7</div><div class="stat-label">App Pages</div></div>
+    <div class="stat"><div class="stat-value">25</div><div class="stat-label">Properties</div></div>
+    <div class="stat"><div class="stat-value">4</div><div class="stat-label">SEC Filings</div></div>
+    <div class="stat"><div class="stat-value">8</div><div class="stat-label">Press Releases</div></div>
+    <div class="stat"><div class="stat-value">2</div><div class="stat-label">ML Models</div></div>
+    <div class="stat"><div class="stat-value">4</div><div class="stat-label">Cloud Stubs</div></div>
+  </div>
+</div>
+
+<!-- ── FEATURES ── -->
+<section id="features">
+  <div class="container">
+    <div class="section-label">Capabilities</div>
+    <div class="section-title">Everything a real estate finance team needs</div>
+    <div class="section-sub">Six integrated modules covering data exploration, document analysis, ML inference, and cloud-ready architecture.</div>
+    <div class="feature-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <div class="feature-title">Chat Assistant</div>
+        <div class="feature-desc">Rule-based NLP chatbot with five intents — SEC filings, financials summary, press releases, property search, and portfolio overview. Designed to swap in Vertex AI ADK or Bedrock via a single env var.</div>
+        <div class="feature-tags"><span class="tag">NLP</span><span class="tag">Rule-based</span><span class="tag">5 intents</span><span class="tag">Vertex AI ready</span></div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🏢</div>
+        <div class="feature-title">Property Explorer</div>
+        <div class="feature-desc">Filter 25 seeded properties by city, type, and status. View linked financials for FY2023 and FY2024 with KPI cards and bar charts for revenue, NOI, and occupancy by market.</div>
+        <div class="feature-tags"><span class="tag">PostgreSQL</span><span class="tag">25 properties</span><span class="tag">5 metros</span></div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📄</div>
+        <div class="feature-title">SEC Filings</div>
+        <div class="feature-desc">Parses a local SEC EDGAR sample — 1 × 10-K (FY2023) and 3 × 10-Q (Q1–Q3 2024) for Acme Realty Corp. Filterable by form type and fiscal year. Metric trend charts across periods.</div>
+        <div class="feature-tags"><span class="tag">EDGAR</span><span class="tag">10-K / 10-Q</span><span class="tag">Trend charts</span></div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📰</div>
+        <div class="feature-title">Press Releases</div>
+        <div class="feature-desc">Eight mock press releases across six categories — Acquisitions, Earnings, Expansion, Leasing, Disposition, and ESG. Searchable by category and keyword with rich card layout.</div>
+        <div class="feature-tags"><span class="tag">Mock data</span><span class="tag">6 categories</span><span class="tag">Keyword search</span></div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-title">ML Predictions</div>
+        <div class="feature-desc">Two trained local models: Random Forest Regressor on California Housing (R²=0.805, RMSE=0.506) and Logistic Regression classifier on UCI Bank Marketing (Accuracy=0.818, F1=0.509).</div>
+        <div class="feature-tags"><span class="tag">Random Forest</span><span class="tag">Logistic Regression</span><span class="tag">scikit-learn</span><span class="tag">SageMaker ready</span></div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">☁️</div>
+        <div class="feature-title">Cloud Services</div>
+        <div class="feature-desc">Graceful stubs for Vertex AI ADK, AWS SageMaker, AWS Bedrock, and Anthropic Claude. All return "not configured" when env vars are absent — no crashes, no missing imports.</div>
+        <div class="feature-tags"><span class="tag">Vertex AI</span><span class="tag">SageMaker</span><span class="tag">Bedrock</span><span class="tag">Anthropic</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CLOUD STATUS ── -->
+<section style="padding: 0 0 3.5rem;">
+  <div class="container">
+    <div class="section-label" style="margin-bottom:0.9rem;">Multi-Cloud Status</div>
+    <div class="cloud-strip">
+      <div class="cloud-item">
+        <span class="cloud-dot" style="color:#4ade80;">●</span>
+        <div><div class="cloud-name">Local Mode</div><div class="cloud-status">Active — no credentials needed</div></div>
+      </div>
+      <div class="cloud-item">
+        <span class="cloud-dot" style="color:#f59e0b;">●</span>
+        <div><div class="cloud-name">GCP Vertex AI ADK</div><div class="cloud-status">Configurable via .env</div></div>
+      </div>
+      <div class="cloud-item">
+        <span class="cloud-dot" style="color:#f59e0b;">●</span>
+        <div><div class="cloud-name">AWS SageMaker</div><div class="cloud-status">Configurable via .env</div></div>
+      </div>
+      <div class="cloud-item">
+        <span class="cloud-dot" style="color:#f59e0b;">●</span>
+        <div><div class="cloud-name">AWS Bedrock</div><div class="cloud-status">Configurable via .env</div></div>
+      </div>
+      <div class="cloud-item">
+        <span class="cloud-dot" style="color:#f59e0b;">●</span>
+        <div><div class="cloud-name">Anthropic Claude</div><div class="cloud-status">Configurable via .env</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TECH STACK ── -->
+<section id="stack">
+  <div class="container">
+    <div class="section-label">Technology</div>
+    <div class="section-title">Built with enterprise-grade open source</div>
+    <div class="section-sub" style="margin-bottom:1.5rem;">No paid cloud credentials required to run locally.</div>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-dot" style="background:#38bdf8;"></div>
+        <div><div class="tech-name">Streamlit 1.35+</div><div class="tech-desc">Multi-page app with dark enterprise UI</div></div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-dot" style="background:#4ade80;"></div>
+        <div><div class="tech-name">PostgreSQL + psycopg2</div><div class="tech-desc">25 properties, FY2023–2024 financials</div></div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-dot" style="background:#a78bfa;"></div>
+        <div><div class="tech-name">scikit-learn</div><div class="tech-desc">Random Forest + Logistic Regression</div></div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-dot" style="background:#f59e0b;"></div>
+        <div><div class="tech-name">SEC EDGAR</div><div class="tech-desc">10-K / 10-Q filings (local + live mode)</div></div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-dot" style="background:#fb923c;"></div>
+        <div><div class="tech-name">Docker</div><div class="tech-desc">PostgreSQL container setup</div></div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-dot" style="background:#38bdf8;"></div>
+        <div><div class="tech-name">Python 3.12</div><div class="tech-desc">pandas, numpy, ucimlrepo, boto3</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SETUP ── -->
+<section id="setup">
+  <div class="container">
+    <div class="section-label">Quick Start</div>
+    <div class="section-title">Run locally in 5 steps</div>
+    <div class="section-sub" style="margin-bottom:1.5rem;">No API keys required. Runs entirely on local data and models.</div>
+    <div class="setup-card">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Clone and install dependencies</div>
+          <pre class="code-block">git clone https://github.com/ashika2031/financial_assistant.git
+cd financial_assistant
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt</pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Set up PostgreSQL with Docker</div>
+          <pre class="code-block">docker run --name financial-postgres \
+  -e POSTGRES_PASSWORD=postgres \
+  -e POSTGRES_DB=real_estate_db \
+  -p 5432:5432 -d postgres:15</pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Configure environment</div>
+          <div class="step-desc">Copy <code style="color:#7dd3fc;">.env.example</code> to <code style="color:#7dd3fc;">.env</code> and set your database URL.</div>
+          <pre class="code-block">DATABASE_URL=postgresql://postgres:postgres@localhost:5432/real_estate_db
+USE_SAMPLE_2024=1</pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Initialize database and train models</div>
+          <pre class="code-block">python setup_database.py --init
+python train_models.py</pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div>
+          <div class="step-title">Launch Streamlit</div>
+          <pre class="code-block">streamlit run app/streamlit_app.py</pre>
+          <div class="step-desc" style="margin-top:6px;">Open <strong style="color:#38bdf8;">http://localhost:8501</strong> in your browser.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>
+    <strong style="color:#e2e8f0;">Prologis AI — Financial Intelligence Platform</strong><br>
+    Built with Streamlit · PostgreSQL · scikit-learn · SEC EDGAR<br>
+    <a href="https://github.com/ashika2031/financial_assistant" target="_blank">github.com/ashika2031/financial_assistant</a>
+    &nbsp;·&nbsp;
+    <span style="color:#475569;">Local fallback mode — no cloud credentials required</span>
+  </p>
+</footer>
+
+</body>
+</html>

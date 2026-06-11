@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.tar.gz
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Environment secrets — never commit the real .env
+.env
+
+# Streamlit
+.streamlit/secrets.toml
+streamlit.log
+
+# macOS
+.DS_Store
+*.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Large ML model — regenerate with: python train_models.py
+models/random_forest_regressor.pkl

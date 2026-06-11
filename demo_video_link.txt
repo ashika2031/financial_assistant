@@ -1,0 +1,11 @@
+Demo Video Link: <ADD YOUR RECORDED DEMO VIDEO URL HERE>
+
+Suggested content for the demo (5-10 minutes):
+1. Project overview and architecture (app/, data/, sql/, models/, inference/, cloud/)
+2. Chat Assistant page - ask a financial question, a property question, a press-release question, and an ML prediction question; show routing tags
+3. Property Explorer - filter by metro area and property type, show charts
+4. Press Releases - show category filters and acquisition/expansion insights
+5. SEC Filings - show live 10-K/10-Q data pulled from EDGAR
+6. ML Predictions - run the Random Forest regression and Logistic Regression classification, toggle SageMaker endpoints on/off
+7. Portfolio Dashboard - KPI cards and charts
+8. Briefly show the notebooks/ (EDA + training) and cloud/ deployment docs

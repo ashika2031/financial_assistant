@@ -1,0 +1,89 @@
+{
+  "company": "Acme Realty Corp",
+  "ticker": "ACME",
+  "cik": "0001234567",
+  "filings": [
+    {
+      "form": "10-K",
+      "period": "FY2023",
+      "filed": "2024-02-28",
+      "fiscal_year": 2023,
+      "revenue": 548300000,
+      "net_income": 208354000,
+      "operating_expenses": 339946000,
+      "total_assets": 3200000000,
+      "total_liabilities": 1800000000,
+      "shareholders_equity": 1400000000,
+      "eps": 2.84,
+      "properties_owned": 25,
+      "occupancy_rate": 93.2,
+      "highlights": [
+        "Revenue grew 4.8% year-over-year driven by industrial segment",
+        "Acquired Class-A office tower in San Francisco for $415M",
+        "Declared quarterly dividend of $0.72 per share",
+        "Completed $89M non-core retail asset dispositions"
+      ]
+    },
+    {
+      "form": "10-Q",
+      "period": "Q3 2024",
+      "filed": "2024-11-14",
+      "fiscal_year": 2024,
+      "revenue": 148200000,
+      "net_income": 56316000,
+      "operating_expenses": 91884000,
+      "total_assets": 3450000000,
+      "total_liabilities": 1890000000,
+      "shareholders_equity": 1560000000,
+      "eps": 0.77,
+      "properties_owned": 29,
+      "occupancy_rate": 94.1,
+      "highlights": [
+        "Q3 2024 revenue up 6.5% vs Q3 2023",
+        "Acquired 5-property industrial portfolio in Chicago for $320M",
+        "Broke ground on 67,000 sq ft Austin build-to-suit",
+        "Signed 10-year lease renewal at 1 World Trade Center"
+      ]
+    },
+    {
+      "form": "10-Q",
+      "period": "Q2 2024",
+      "filed": "2024-08-12",
+      "fiscal_year": 2024,
+      "revenue": 141900000,
+      "net_income": 53922000,
+      "operating_expenses": 87978000,
+      "total_assets": 3280000000,
+      "total_liabilities": 1840000000,
+      "shareholders_equity": 1440000000,
+      "eps": 0.74,
+      "properties_owned": 26,
+      "occupancy_rate": 93.8,
+      "highlights": [
+        "Divested three non-core retail assets for $89M combined",
+        "Office portfolio occupancy reached 95.2%",
+        "Industrial revenue grew 9.1% year-over-year"
+      ]
+    },
+    {
+      "form": "10-Q",
+      "period": "Q1 2024",
+      "filed": "2024-05-10",
+      "fiscal_year": 2024,
+      "revenue": 138600000,
+      "net_income": 52668000,
+      "operating_expenses": 85932000,
+      "total_assets": 3195000000,
+      "total_liabilities": 1795000000,
+      "shareholders_equity": 1400000000,
+      "eps": 0.72,
+      "properties_owned": 25,
+      "occupancy_rate": 92.7,
+      "highlights": [
+        "Strong leasing activity in San Francisco and New York markets",
+        "Announced GreenBuild partnership for LEED Gold upgrades",
+        "Board approved $150M share repurchase program"
+      ]
+    }
+  ]
+}
