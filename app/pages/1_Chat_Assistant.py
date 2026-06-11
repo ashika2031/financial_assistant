@@ -7,7 +7,7 @@ import streamlit as st
 
 st.set_page_config(page_title="Chat Assistant · Prologis AI", page_icon="💬", layout="wide", initial_sidebar_state="expanded")
 
-from app.ui_styles import apply_global_styles, hero_card
+from app.ui_styles import apply_global_styles, hero_card, page_footer, sample_disclaimer
 apply_global_styles()
 
 from app.chatbot import respond
@@ -26,11 +26,9 @@ st.markdown("""
   <div style="font-size:0.63rem;font-weight:700;color:#38bdf8;text-transform:uppercase;
               letter-spacing:0.08em;margin-bottom:6px;">Data Scope</div>
   <div style="font-size:0.8rem;color:#94a3b8;line-height:1.55;">
-    Prologis / Acme Realty Corp financials &nbsp;·&nbsp;
-    25 property records across 5 metros &nbsp;·&nbsp;
-    4 SEC filing reports (10-K / 10-Q) &nbsp;·&nbsp;
-    8 press releases &nbsp;·&nbsp;
-    Local ML prediction endpoints &nbsp;·&nbsp;
+    <strong style="color:#e2e8f0;">Data Scope:</strong> Prologis-focused demo using sample property records,
+    sample financial metrics, selected SEC filing-style data, stored press releases, and
+    local/SageMaker-ready ML prediction endpoints &nbsp;·&nbsp;
     <span style="color:#f59e0b;font-weight:600;">Local rule-based mode</span>
   </div>
 </div>
@@ -135,3 +133,6 @@ with st.sidebar:
     if st.button("🗑 Clear conversation"):
         st.session_state["messages"] = []
         st.rerun()
+
+sample_disclaimer()
+page_footer()

@@ -14,7 +14,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-from app.ui_styles import apply_global_styles, hero_card
+from app.ui_styles import apply_global_styles, hero_card, page_footer, sample_disclaimer
 apply_global_styles()
 
 from app.db import health_check
@@ -148,3 +148,6 @@ n2.page_link("pages/2_Property_Explorer.py", label="🏢 Property Explorer", ico
 n3.page_link("pages/3_SEC_Filings.py",       label="📄 SEC Filings",       icon="📄")
 n4.page_link("pages/4_Press_Releases.py",    label="📰 Press Releases",    icon="📰")
 n5.page_link("pages/5_ML_Predictions.py",    label="🤖 ML Predictions",    icon="🤖")
+
+sample_disclaimer()
+page_footer()

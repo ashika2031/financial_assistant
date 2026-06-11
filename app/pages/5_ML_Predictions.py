@@ -7,7 +7,7 @@ import streamlit as st
 
 st.set_page_config(page_title="ML Predictions · Prologis AI", page_icon="🤖", layout="wide", initial_sidebar_state="expanded")
 
-from app.ui_styles import apply_global_styles, hero_card, status_badge
+from app.ui_styles import apply_global_styles, hero_card, status_badge, page_footer, sample_disclaimer
 apply_global_styles()
 
 from app import ml_inference
@@ -24,13 +24,13 @@ hero_card(
 )
 
 # ── Engine status ─────────────────────────────────────────────────────────────
-status_badge("SageMaker" if sm_st["configured"] else "Local sklearn models", sm_st["configured"])
+status_badge("SageMaker" if sm_st["configured"] else "Local scikit-learn models", sm_st["configured"])
 
 if not sm_st["configured"]:
     st.markdown(
         f"<div style='background:rgba(56,189,248,0.07);border:1px solid rgba(56,189,248,0.17);"
         f"border-radius:8px;padding:0.55rem 1rem;font-size:0.78rem;color:#7dd3fc;margin-bottom:1rem;'>"
-        f"💻 Running local sklearn models &nbsp;·&nbsp; {sm_st['note']}"
+        f"💻 Running local scikit-learn models &nbsp;·&nbsp; {sm_st['note']}"
         f"</div>",
         unsafe_allow_html=True,
     )
@@ -210,3 +210,6 @@ with tab2:
             st.progress(prob, text=f"Model confidence: {prob*100:.1f}%")
         else:
             st.error(f"Prediction failed: {result.get('error')}")
+
+sample_disclaimer()
+page_footer()

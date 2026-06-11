@@ -1,7 +1,7 @@
 # Demo Script — Prologis AI Financial Intelligence Platform
 
 ## Business Context
-Prologis AI is a financial assistant for Acme Realty Corp, a real estate investment company.
+Prologis AI is a financial assistant for Prologis, a real estate investment company.
 The platform provides chatbot-based financial analysis, SEC filing insights, press release
 intelligence, ML predictions, and cloud-ready integrations — all running locally without
 any paid cloud credentials.
@@ -40,7 +40,7 @@ Navigate to **Chat Assistant**.
 
 **Ask about another company (scope guard demo):**
 "What is Google's revenue?"
-- Expected: "This assistant is configured for Prologis / Acme Realty Corp only."
+- Expected: "This assistant is configured for Prologis sample data only."
 
 **Ask about unavailable year:**
 "Show me 2019 financials"
@@ -117,7 +117,7 @@ Point out:
 | Property database | ✅ 25 properties, 5 metros, FY2023–2024 |
 | SEC filing insights | ✅ 10-K + 3 × 10-Q loaded |
 | Press release intelligence | ✅ 8 releases, keyword search |
-| ML predictions | ✅ RF Regressor + LR Classifier, local sklearn |
+| ML predictions | ✅ RF Regressor + LR Classifier, local scikit-learn |
 | Cloud-ready architecture | ✅ Vertex AI, SageMaker, Bedrock, Anthropic stubs |
 | Zero-credential local mode | ✅ Runs fully without API keys |
 

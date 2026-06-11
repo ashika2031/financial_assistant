@@ -1,189 +1,97 @@
-# Financial Assistant — Acme Realty Corp
+# Prologis AI Financial Intelligence Platform
 
-AI-powered financial and property intelligence platform built with Streamlit, PostgreSQL, scikit-learn, and cloud service stubs.
+A full-stack financial assistant web application built with Streamlit, PostgreSQL, scikit-learn, and cloud-ready stubs for Vertex AI, AWS SageMaker, AWS Bedrock, and Anthropic Claude.
+
+> **Academic demo** — uses sample property-level data, selected SEC-style metrics, and mock press release records for demonstration purposes.
+
+---
+
+## Features
+
+| Module | Description |
+|---|---|
+| **Chat Assistant** | Rule-based NLP chatbot with company/year scope guard; swap in LLM via `.env` |
+| **Property Explorer** | 25 sample properties across 5 metro areas, filterable by city, type, and fiscal year |
+| **SEC Filings** | 10-K + 3×10-Q filing viewer with metric trend charts; EDGAR live mode via `EDGAR_LIVE=1` |
+| **Press Releases** | 8 mock releases with keyword search and category filter |
+| **ML Predictions** | scikit-learn Random Forest Regressor (R²=0.805) and Logistic Regression Classifier (Acc=0.818) |
+| **Cloud Services** | Integration status dashboard for Vertex AI ADK, SageMaker, Bedrock, and Anthropic — graceful local fallback |
 
 ---
 
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    Streamlit UI (6 pages)                │
-│  Home · Chat Assistant · Property Explorer · SEC Filings │
-│  Press Releases · ML Predictions · Cloud Services        │
-└────────────┬─────────────┬──────────────┬───────────────┘
-             │             │              │
-     ┌───────▼──────┐ ┌────▼────┐ ┌──────▼──────────┐
-     │  PostgreSQL  │ │  JSON   │ │  Local ML Models │
-     │  Properties  │ │  Data   │ │  RF + LR (.pkl)  │
-     │  Financials  │ │SEC/PRs  │ └──────┬──────────┘
-     └──────────────┘ └─────────┘        │ fallback
-                                  ┌──────▼──────────┐
-                                  │  Cloud Stubs     │
-                                  │  SageMaker       │
-                                  │  Vertex AI ADK   │
-                                  │  AWS Bedrock     │
-                                  │  Anthropic Claude│
-                                  └─────────────────┘
+User → Streamlit UI
+          ├── Chatbot Router  →  Rule-based (local)  or  Anthropic / Vertex AI (cloud)
+          ├── Data Layer      →  PostgreSQL + JSON (SEC / Press Releases)
+          └── ML Inference    →  local scikit-learn  or  AWS SageMaker endpoints
 ```
 
-### Data Flow
-1. User sends a message → `chatbot.py` detects intent
-2. Chatbot fetches data from Postgres / SEC JSON / press release JSON
-3. If cloud LLM is configured, data + question are sent to Claude or Vertex AI
-4. Otherwise, rule-based templates format the response
-5. ML Predictions page loads `.pkl` models locally or calls SageMaker endpoint
+All cloud integrations use stub classes that activate automatically when the corresponding environment variables are present. **No cloud credentials are required to run the app locally.**
 
 ---
 
 ## Local Setup
 
 ### Prerequisites
+
 - Python 3.10+
 - Docker (for PostgreSQL)
 
-### 1. Start PostgreSQL
+### Steps
 
 ```bash
+# 1. Clone
+git clone https://github.com/ashika2031/financial_assistant.git
+cd financial_assistant
+
+# 2. Create virtual environment
+python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Start PostgreSQL
 docker run --name financial-postgres \
-  -e POSTGRES_USER=postgres \
   -e POSTGRES_PASSWORD=postgres \
   -e POSTGRES_DB=real_estate_db \
-  -p 5432:5432 -d postgres:16
-```
+  -p 5432:5432 -d postgres:15
 
-Or if the container already exists:
-```bash
-docker start financial-postgres
-```
-
-### 2. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Configure environment
-
-```bash
+# 5. Configure environment
 cp .env.example .env
-# Edit .env — DATABASE_URL is already set for local Docker
-```
+# Default .env works with the Docker command above — no edits needed for local mode
 
-Minimum `.env`:
-```
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/real_estate_db
-USE_SAMPLE_2024=1
-```
+# 6. Seed the database
+python setup_database.py --init
 
-### 4. Initialize database and train models
+# 7. Train ML models
+python train_models.py
 
-```bash
-python setup_database.py --init      # creates tables, seeds 25 properties + financials
-python train_models.py               # trains RF regressor + LR classifier, saves .pkl files
-```
-
-### 5. Run the app
-
-```bash
+# 8. Run the app
 streamlit run app/streamlit_app.py
 ```
 
-Open **http://localhost:8501**
+Open **http://localhost:8501** in your browser.
 
 ---
 
-## Pages
+## Environment Variables
 
-| Page | Description |
-|------|-------------|
-| **Home** | KPI dashboard, latest SEC filing, recent press releases |
-| **Chat Assistant** | Natural language Q&A across all data sources |
-| **Property Explorer** | Filter and browse properties with financial breakdowns |
-| **SEC Filings** | Annual (10-K) and quarterly (10-Q) report viewer |
-| **Press Releases** | Company announcements with category and keyword filters |
-| **ML Predictions** | Housing value regression + subscription classification |
-| **Cloud Services** | Status and configuration guide for all cloud integrations |
-
----
-
-## Machine Learning Models
-
-### Regression — Random Forest on California Housing
-
-- **Dataset**: California Housing (scikit-learn built-in)
-- **Model**: `RandomForestRegressor(n_estimators=100)`
-- **Features**: MedInc, HouseAge, AveRooms, AveBedrms, Population, AveOccup, Latitude, Longitude
-- **Metrics**: RMSE ≈ 0.51, MAE ≈ 0.33, R² ≈ 0.80
-- **Artifact**: `models/random_forest_regressor.pkl` + `models/rf_scaler.pkl`
-
-### Classification — Logistic Regression on Bank Marketing
-
-- **Dataset**: Bank Marketing (UCI ML Repository, id=222)
-- **Model**: `LogisticRegression(max_iter=1000, class_weight='balanced')`
-- **Target**: Predict subscription (yes/no)
-- **Preprocessing**: LabelEncoder for categoricals, StandardScaler for numerics
-- **Metrics**: Accuracy ≈ 0.82, F1 ≈ 0.51, Recall ≈ 0.78
-- **Artifact**: `models/logistic_regression_classifier.pkl` + `models/lr_scaler.pkl` + `models/lr_label_encoders.pkl`
-
----
-
-## Chatbot Query Routing
-
-The chatbot in `app/chatbot.py` detects intent from keywords:
-
-| User says... | Intent | Data source |
+| Variable | Required | Description |
 |---|---|---|
-| "net income", "revenue", "earnings" | `financials_summary` | PostgreSQL |
-| "properties", "office", metro names | `properties` | PostgreSQL |
-| "10-K", "10-Q", "annual report" | `sec_filing` | SEC JSON |
-| "acquisition", "press release", "expansion" | `press_releases` | Press releases JSON |
-| "summary", "overview", "portfolio" | `portfolio_summary` | PostgreSQL |
-
-If `ANTHROPIC_API_KEY` is set, Claude handles the response using fetched data as context.
-If Vertex AI is configured, Gemini handles it. Otherwise, templates format the data locally.
-
----
-
-## Cloud Configuration
-
-All cloud services are optional. The app runs fully locally without any API keys.
-
-### Anthropic Claude (chatbot)
-```
-ANTHROPIC_API_KEY=sk-ant-...
-```
-
-### GCP Vertex AI ADK (chatbot alternative)
-```
-VERTEX_PROJECT=your-gcp-project-id
-VERTEX_LOCATION=us-central1
-GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account-key.json
-```
-Install: `pip install google-cloud-aiplatform vertexai`
-
-### AWS SageMaker (ML endpoints)
-```
-AWS_ACCESS_KEY_ID=AKIA...
-AWS_SECRET_ACCESS_KEY=...
-AWS_REGION=us-east-1
-SAGEMAKER_RF_ENDPOINT=rf-housing-endpoint
-SAGEMAKER_LR_ENDPOINT=lr-bank-endpoint
-```
-
-**SageMaker deployment steps:**
-1. Train models: `python train_models.py`
-2. Package artifacts as `model.tar.gz` and upload to S3
-3. Deploy via SageMaker Python SDK (SKLearnModel)
-4. Set endpoint names in `.env`
-
-### AWS Bedrock (summarization)
-```
-AWS_ACCESS_KEY_ID=AKIA...
-AWS_SECRET_ACCESS_KEY=...
-AWS_REGION=us-east-1
-BEDROCK_MODEL_ID=amazon.titan-text-express-v1  # optional, this is the default
-```
+| `DATABASE_URL` | Yes | PostgreSQL connection string |
+| `USE_SAMPLE_2024` | No | Set to `1` to include FY2024 sample data |
+| `ANTHROPIC_API_KEY` | No | Enables Anthropic Claude in chatbot |
+| `VERTEX_PROJECT` | No | GCP project ID for Vertex AI ADK |
+| `VERTEX_LOCATION` | No | GCP region (default: `us-central1`) |
+| `GOOGLE_APPLICATION_CREDENTIALS` | No | Path to GCP service account JSON |
+| `AWS_ACCESS_KEY_ID` | No | AWS IAM key for SageMaker / Bedrock |
+| `AWS_SECRET_ACCESS_KEY` | No | AWS IAM secret |
+| `AWS_REGION` | No | AWS region (default: `us-east-1`) |
+| `SAGEMAKER_RF_ENDPOINT` | No | SageMaker Random Forest endpoint name |
+| `SAGEMAKER_LR_ENDPOINT` | No | SageMaker Logistic Regression endpoint name |
+| `BEDROCK_MODEL_ID` | No | Bedrock model ID (default: `amazon.titan-text-express-v1`) |
 
 ---
 
@@ -192,17 +100,16 @@ BEDROCK_MODEL_ID=amazon.titan-text-express-v1  # optional, this is the default
 ```
 financial-assistant-project/
 ├── app/
-│   ├── streamlit_app.py      # Main entry point (home dashboard)
-│   ├── admin.py              # Admin / Debug page
-│   ├── chatbot.py            # Intent detection + response routing
-│   ├── cloud_stubs.py        # Cloud service wrappers (Anthropic/Vertex/SageMaker/Bedrock)
-│   ├── config.py             # .env loader
-│   ├── db.py                 # DB health check + reseed helpers
-│   ├── init_db.py            # Table creation + 25-property seed
-│   ├── ml_inference.py       # Load .pkl models + run predictions
-│   ├── press_releases.py     # Press release loader/search
-│   ├── queries.py            # Property + financial SQL helpers
-│   ├── sec_edgar.py          # SEC filing data loader
+│   ├── streamlit_app.py          # Home dashboard
+│   ├── ui_styles.py              # Global CSS, sidebar, shared helpers
+│   ├── chatbot.py                # Rule-based chatbot with scope guards
+│   ├── queries.py                # PostgreSQL query functions
+│   ├── db.py                     # Database connection and health check
+│   ├── init_db.py                # Database initializer
+│   ├── sec_edgar.py              # SEC filing loader (local JSON + live EDGAR)
+│   ├── press_releases.py         # Press release loader
+│   ├── ml_inference.py           # ML inference router (local / SageMaker)
+│   ├── cloud_stubs.py            # Cloud integration stubs with graceful fallback
 │   └── pages/
 │       ├── 1_Chat_Assistant.py
 │       ├── 2_Property_Explorer.py
@@ -211,23 +118,53 @@ financial-assistant-project/
 │       ├── 5_ML_Predictions.py
 │       └── 6_Cloud_Services.py
 ├── data/
-│   ├── press_releases.json   # 8 sample press releases
-│   └── sec_filings.json      # 4 sample filings (1x 10-K, 3x 10-Q)
-├── models/
-│   ├── random_forest_regressor.pkl
-│   ├── rf_scaler.pkl
-│   ├── rf_feature_names.json
-│   ├── logistic_regression_classifier.pkl
-│   ├── lr_scaler.pkl
-│   ├── lr_label_encoders.pkl
-│   ├── lr_feature_names.json
-│   ├── lr_target_encoder.pkl
-│   └── model_metrics.json
-├── scripts/
-│   ├── reseed_2024.py
-│   └── reseed_2024.sh
-├── setup_database.py         # CLI: --init / --health / --reseed
-├── train_models.py           # Train and save both ML models
+│   ├── sec_filings.json          # Sample SEC filing data
+│   └── press_releases.json       # Sample press release data
+├── models/                       # Trained scikit-learn model files (generated by train_models.py)
+├── setup_database.py             # Database seeding script
+├── train_models.py               # ML model training script
 ├── requirements.txt
-└── .env
+├── .env.example
+├── demo_script.md                # Step-by-step demo walkthrough
+└── index.html                    # GitHub Pages landing page
 ```
+
+---
+
+## ML Models
+
+Both models are trained on public datasets and serve as demonstration of SageMaker-ready inference.
+
+### Random Forest Regressor
+- **Dataset**: California Housing (sklearn built-in)
+- **Task**: Predict median house value
+- **Performance**: R² = 0.805, RMSE = 0.506
+- **Features**: MedInc, HouseAge, AveRooms, AveBedrms, Population, AveOccup, Latitude, Longitude
+
+### Logistic Regression Classifier
+- **Dataset**: Bank Marketing (UCI)
+- **Task**: Predict term deposit subscription (yes/no)
+- **Performance**: Accuracy = 0.818, F1 = 0.509
+- **Features**: age, job, marital, education, balance, duration, campaign, pdays, previous
+
+To deploy either model to SageMaker, see the **SageMaker Deployment Guide** on the Cloud Services page.
+
+---
+
+## Cloud Service Integration
+
+All four cloud services use stub classes in `app/cloud_stubs.py`. Each stub checks for its required environment variables on import and:
+- Returns `configured: False` with a local fallback if vars are missing
+- Activates the real client if vars are present
+
+No code changes are required to switch between local and cloud mode — just update `.env` and restart Streamlit.
+
+---
+
+## Demo
+
+See [demo_script.md](demo_script.md) for a complete walkthrough covering all 7 pages and key demo talking points.
+
+---
+
+*Prologis AI Financial Assistant | Academic demo | Local fallback and cloud-ready architecture*

@@ -8,7 +8,7 @@ import pandas as pd
 
 st.set_page_config(page_title="SEC Filings · Prologis AI", page_icon="📄", layout="wide", initial_sidebar_state="expanded")
 
-from app.ui_styles import apply_global_styles, hero_card
+from app.ui_styles import apply_global_styles, hero_card, page_footer, sample_disclaimer
 apply_global_styles()
 
 from app.sec_edgar import get_company_info, get_filings, get_metric_history
@@ -101,3 +101,6 @@ history = get_metric_history(metric_opts[chosen])
 if history:
     hist_df = pd.DataFrame(history).set_index("period")
     st.line_chart(hist_df["value"], color="#38bdf8")
+
+sample_disclaimer()
+page_footer()

@@ -438,6 +438,32 @@ hr { border-color: #1e293b !important; margin: 1.2rem 0 !important; }
     overflow-wrap: break-word; word-break: break-word;
 }
 
+/* Page footer */
+.fa-page-footer {
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #1e293b;
+    text-align: center;
+    font-size: 0.67rem;
+    color: #334155;
+    width: 100%; max-width: 100%; box-sizing: border-box;
+    letter-spacing: 0.03em;
+}
+
+/* Sample data disclaimer */
+.fa-disclaimer {
+    background: rgba(245,158,11,0.06);
+    border: 1px solid rgba(245,158,11,0.2);
+    border-radius: 8px;
+    padding: 0.55rem 1rem;
+    font-size: 0.72rem;
+    color: #94a3b8;
+    line-height: 1.55;
+    width: 100%; max-width: 100%; box-sizing: border-box;
+    margin: 0.75rem 0;
+}
+.fa-disclaimer strong { color: #fcd34d; }
+
 /* ════════════════════════════════════════════════════════════════
    RESPONSIVE BREAKPOINT
    ════════════════════════════════════════════════════════════════ */
@@ -512,6 +538,26 @@ def status_badge(label: str, active: bool) -> None:
         f'padding:3px 11px;font-size:0.69rem;font-weight:700;color:{color};'
         f'letter-spacing:0.04em;display:inline-block;margin-bottom:0.6rem;">'
         f'{dot} — {label}</span>',
+        unsafe_allow_html=True,
+    )
+
+
+def page_footer() -> None:
+    st.markdown(
+        "<div class='fa-page-footer'>"
+        "Prologis AI Financial Assistant &nbsp;|&nbsp; Academic demo &nbsp;|&nbsp; "
+        "Local fallback and cloud-ready architecture"
+        "</div>",
+        unsafe_allow_html=True,
+    )
+
+
+def sample_disclaimer() -> None:
+    st.markdown(
+        "<div class='fa-disclaimer'>"
+        "<strong>Demo note:</strong> This application uses sample property-level data, "
+        "selected SEC-style metrics, and mock press release records for academic demonstration purposes."
+        "</div>",
         unsafe_allow_html=True,
     )
 

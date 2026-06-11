@@ -7,7 +7,7 @@ import streamlit as st
 
 st.set_page_config(page_title="Cloud Services · Prologis AI", page_icon="☁️", layout="wide", initial_sidebar_state="expanded")
 
-from app.ui_styles import apply_global_styles, hero_card
+from app.ui_styles import apply_global_styles, hero_card, page_footer
 apply_global_styles()
 
 from app.cloud_stubs import AnthropicClient, VertexAIAgent, BedrockClient, SageMakerClient
@@ -56,7 +56,7 @@ st.markdown("""
     <strong style="color:#e2e8f0;">PostgreSQL</strong>,
     <strong style="color:#e2e8f0;">sample SEC metrics</strong>,
     <strong style="color:#e2e8f0;">press release data</strong>, and
-    <strong style="color:#e2e8f0;">local sklearn ML models</strong>.
+    <strong style="color:#e2e8f0;">local scikit-learn ML models</strong>.
     Cloud services can be enabled at any time by adding environment variables to <code>.env</code>
     and restarting Streamlit — no code changes required.
   </div>
@@ -262,3 +262,5 @@ st.markdown("""
   </div>
 </div>
 """, unsafe_allow_html=True)
+
+page_footer()

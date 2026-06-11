@@ -7,7 +7,7 @@ import streamlit as st
 
 st.set_page_config(page_title="Press Releases · Prologis AI", page_icon="📰", layout="wide", initial_sidebar_state="expanded")
 
-from app.ui_styles import apply_global_styles, hero_card, pr_card
+from app.ui_styles import apply_global_styles, hero_card, pr_card, page_footer, sample_disclaimer
 apply_global_styles()
 
 from app.press_releases import get_all, get_categories
@@ -63,3 +63,6 @@ for r in releases:
         keywords=r.get("keywords", []),
         pr_id=r["id"],
     )
+
+sample_disclaimer()
+page_footer()

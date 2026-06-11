@@ -8,7 +8,7 @@ import pandas as pd
 
 st.set_page_config(page_title="Property Explorer · Prologis AI", page_icon="🏢", layout="wide", initial_sidebar_state="expanded")
 
-from app.ui_styles import apply_global_styles, hero_card
+from app.ui_styles import apply_global_styles, hero_card, page_footer, sample_disclaimer
 apply_global_styles()
 
 from app.queries import get_properties, get_financials, get_summary, get_metro_breakdown, get_type_breakdown
@@ -122,3 +122,6 @@ with c2:
         tdf = pd.DataFrame(type_data)
         tdf["revenue"] = tdf["revenue"].astype(float)
         st.bar_chart(tdf.set_index("property_type")["revenue"], color="#0ea5e9")
+
+sample_disclaimer()
+page_footer()

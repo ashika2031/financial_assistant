@@ -173,7 +173,7 @@ def _unknown_response(msg: str) -> str:
 
 # ── main entry point ──────────────────────────────────────────────────────────
 
-_SYSTEM_PROMPT = """You are a financial assistant for Acme Realty Corp, a real estate investment company.
+_SYSTEM_PROMPT = """You are a financial assistant for Prologis, a real estate investment company.
 You help users query property data, financial summaries, SEC filings, and press releases.
 Be concise, professional, and data-focused. Format numbers with commas. Use markdown."""
 
@@ -196,7 +196,7 @@ def respond(user_message: str) -> Dict[str, Any]:
     if any(co in msg_lower for co in _OTHER_COMPANIES):
         return {
             "answer": (
-                "This assistant is configured for **Prologis / Acme Realty Corp** only.\n\n"
+                "This assistant is configured for **Prologis** sample data only.\n\n"
                 "I can't retrieve data for other companies. Try asking about:\n"
                 "- Prologis properties and financials\n"
                 "- SEC filings (10-K / 10-Q)\n"
